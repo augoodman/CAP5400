@@ -1,5 +1,4 @@
 #include "utility.h"
-#include "strings.h"
 
 #define MAXRGB 255
 #define MINRGB 0
