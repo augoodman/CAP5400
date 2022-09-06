@@ -46,15 +46,15 @@ int main (int argc, char** argv)
 		strcpy(outfile, pch);
 		pch = strtok(NULL, " ");
         if (strncasecmp(pch,"add",MAXLEN)==0) {
-            cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
             numROI = atoi(strtok(NULL, " "));
+            cout << "Add function selected for " << numROI << " ROI(s).\n";
+            cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
             int ROIremaining = numROI;
             ROIcount = 0;
             int value[3];
-            cout << "Add function selected for " << numROI << " ROI(s).\n";
             while (ROIremaining > 0)
             {
-                cout << "Processing ROI #" << ROIcount+1 << ".\n";
+                cout << "Processing ROI #" << ROIcount + 1 << ".\n";
                 pixelX[ROIcount] = atoi(strtok(NULL, " "));
                 pixelY[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Pixel location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
@@ -67,12 +67,50 @@ int main (int argc, char** argv)
                 ++ROIcount;
             }
             utility::addGrey(src, tgt, numROI, pixelX, pixelY, sX, sY, value);
+            cout << "\n";
         }
 
         else if (strncasecmp(pch,"binarize",MAXLEN)==0) {
-			/* Thresholding */
-			pch = strtok(NULL, "\n");
-            utility::binarize(src,tgt,atoi(pch));
+            numROI = atoi(strtok(NULL, " "));
+            cout << "Binarize function selected for " << numROI << " ROI(s).\n";
+            cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
+            int ROIremaining = numROI;
+            ROIcount = 0;
+            bool isDouble[3];
+            int threshold1[3];
+            int threshold2[3];
+            while (ROIremaining > 0)
+            {
+                cout << "Processing ROI #" << ROIcount + 1 << ".\n";
+                pixelX[ROIcount] = atoi(strtok(NULL, " "));
+                pixelY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "Pixel location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+                sX[ROIcount] = atoi(strtok(NULL, " "));
+                sY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "Window size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+                if (atoi(strtok(NULL, " ")) == 1)
+                    isDouble[ROIcount] = true;
+                else
+                    isDouble[ROIcount] = false;
+                if (isDouble[ROIcount])
+                {
+                    threshold1[ROIcount] = atoi(strtok(NULL, " "));
+                    threshold2[ROIcount] = atoi(strtok(NULL, " "));
+                    cout << "Double threshold values: " << threshold1[ROIcount] << ", " << threshold2[ROIcount] << "\n";
+                }
+                else
+                {
+                    threshold1[ROIcount] = atoi(strtok(NULL, " "));
+                    cout << "Threshold value: " << threshold1[ROIcount] << "\n";
+                }
+                --ROIremaining;
+                ++ROIcount;
+            }
+            utility::binarize(src, tgt, numROI, pixelX, pixelY, sX, sY, isDouble, threshold1, threshold2);
+            cout << "\n";
+            //}
+            //pch = strtok(NULL, "\n");
+           // utility::binarize(src, tgt, numROI, pixelX, pixelY, sX, sY, isDouble, threshold1, threshold2);
         }
 
         

@@ -31,7 +31,8 @@ void utility::addGrey(image &src, image &tgt, int numROI, int pixelX[3], int pix
 {
 	tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
-    while (numROI > 0) {
+    while (numROI > 0)
+    {
         for (int i = 0; i < src.getNumberOfRows(); i++)
             for (int j = 0; j < src.getNumberOfColumns(); j++)
                 if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
@@ -45,19 +46,47 @@ void utility::addGrey(image &src, image &tgt, int numROI, int pixelX[3], int pix
 }
 
 /*-----------------------------------------------------------------------**/
-void utility::binarize(image &src, image &tgt, int threshold)
+void utility::binarize(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
+                       bool isDouble[3], int threshold1[3], int threshold2[3])
 {
 	tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
-	for (int i=0; i<src.getNumberOfRows(); i++)
-	{
-		for (int j=0; j<src.getNumberOfColumns(); j++)
-		{
-			if (src.getPixel(i,j) < threshold)
-				tgt.setPixel(i,j,MINRGB);
-			else
-				tgt.setPixel(i,j,MAXRGB);
-		}
-	}
+    int ROIcount = 1;
+    while (numROI > 0)
+    {
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (!isDouble[ROIcount - 1]) {
+                    if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
+                    src.getPixel(i, j) < threshold1[ROIcount - 1])
+                        tgt.setPixel(i, j, MINRGB);
+                    else if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
+                    src.getPixel(i, j) >= threshold1[ROIcount - 1])
+                        tgt.setPixel(i, j, MAXRGB);
+                    else if (ROIcount == 1)
+                        tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+                }
+                else
+                {
+                    if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
+                    src.getPixel(i, j) < threshold1[ROIcount - 1])
+                        tgt.setPixel(i, j, MINRGB);
+                    else if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
+                    src.getPixel(i, j) > threshold2[ROIcount - 1])
+                        tgt.setPixel(i, j, MINRGB);
+                    else if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
+                    src.getPixel(i, j) > threshold1[ROIcount - 1] && src.getPixel(i, j ) < threshold2[ROIcount - 1])
+                        tgt.setPixel(i, j, MAXRGB);
+                    else if (ROIcount == 1)
+                        tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+                }
+        --numROI;
+        ++ROIcount;
+    }
 }
 
 /*-----------------------------------------------------------------------**/
