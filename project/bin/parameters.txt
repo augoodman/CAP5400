@@ -1,5 +1,5 @@
 baboon.pgm baboon_bi125.pgm binarize 3 50 50 50 50 0 125 75 75 75 75 0 200 100 100 100 100 1 100 150
 baboon.pgm baboon_add.pgm add 3 50 50 50 50 50 100 100 100 100 -50 75 75 75 75 100
-baboon.pgm baboon_DT125.pgm doubleThreshold 125
+baboon.pgm baboon_us.pgm uniformSmoothing 3 0 0 100 100 7 0 100 100 100 5 0 200 100 100 3
 baboon.pgm baboon_s200.pgm scale 2
 baboon.pgm baboon_s50.pgm scale 0.5

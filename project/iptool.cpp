@@ -33,7 +33,7 @@ int main (int argc, char** argv)
 	char outfile[MAXLEN];
 	char *pch;
     int numROI, ROIcount;
-    int pixelX[3], pixelY[3], sX[3], sY[3], ws[3];
+    int pixelX[3], pixelY[3], sX[3], sY[3], ws[3], threshold[3], moreC[3];
 	if ((fp = fopen(argv[1],"r")) == NULL) {
 		fprintf(stderr, "Can't open file: %s\n", argv[1]);
 		exit(1);
@@ -57,10 +57,10 @@ int main (int argc, char** argv)
                 cout << "Processing ROI #" << ROIcount + 1 << ".\n";
                 pixelX[ROIcount] = atoi(strtok(NULL, " "));
                 pixelY[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Pixel location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+                cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
                 sX[ROIcount] = atoi(strtok(NULL, " "));
                 sY[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Window size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+                cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
                 value[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Add value is: " << value[ROIcount] << "\n";
                 --ROIremaining;
@@ -84,10 +84,10 @@ int main (int argc, char** argv)
                 cout << "Processing ROI #" << ROIcount + 1 << ".\n";
                 pixelX[ROIcount] = atoi(strtok(NULL, " "));
                 pixelY[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Pixel location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+                cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
                 sX[ROIcount] = atoi(strtok(NULL, " "));
                 sY[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Window size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+                cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
                 if (atoi(strtok(NULL, " ")) == 1)
                     isDouble[ROIcount] = true;
                 else
@@ -108,23 +108,58 @@ int main (int argc, char** argv)
             }
             utility::binarize(src, tgt, numROI, pixelX, pixelY, sX, sY, isDouble, threshold1, threshold2);
             cout << "\n";
-            //}
-            //pch = strtok(NULL, "\n");
-           // utility::binarize(src, tgt, numROI, pixelX, pixelY, sX, sY, isDouble, threshold1, threshold2);
         }
 
-        
+/*-----------------------------------------------------------------------
         else if (strncasecmp(pch,"doubleThreshold",MAXLEN)==0) {
-            /* Image scaling */
+            * Image scaling
             pch = strtok(NULL, " ");
             utility::doubleThreshold(src,tgt,atoi(pch));
         }
-        
+-----------------------------------------------------------------------**/
+
 		else if (strncasecmp(pch,"scale",MAXLEN)==0) {
 			/* Image scaling */
 			pch = strtok(NULL, " ");
 			utility::scale(src,tgt,atof(pch));
 		}
+
+        else if (strncasecmp(pch,"uniformSmoothing",MAXLEN)==0) {
+            numROI = atoi(strtok(NULL, " "));
+            cout << "Uniform smoothing function selected for " << numROI << " ROI(s).\n";
+            cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
+            int ROIremaining = numROI;
+            ROIcount = 0;
+            bool isDouble[3];
+            int threshold1[3];
+            int threshold2[3];
+            while (ROIremaining > 0)
+            {
+                cout << "Processing ROI #" << ROIcount + 1 << ".\n";
+                pixelX[ROIcount] = atoi(strtok(NULL, " "));
+                pixelY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+                sX[ROIcount] = atoi(strtok(NULL, " "));
+                sY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+                ws[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "Window size: " << ws[ROIcount] << "\n";
+                --ROIremaining;
+                ++ROIcount;
+            }
+            utility::uniformSmoothing(src,tgt, numROI, pixelX, pixelY, sX, sY, ws);
+            cout << "\n";
+        }
+
+        else if (strncasecmp(pch,"adaptiveSmoothing",MAXLEN)==0) {
+            pch = strtok(NULL, " ");
+            utility::adaptiveSmoothing(src, tgt, numROI, pixelX, pixelY, sX, sY, ws, threshold);
+        }
+
+        else if (strncasecmp(pch,"moreColor",MAXLEN)==0) {
+            pch = strtok(NULL, " ");
+            utility::moreColor(src, tgt, numROI, pixelX, pixelY, sX, sY, moreC);
+        }
 
 		else {
 			printf("No function: %s\n", pch);
