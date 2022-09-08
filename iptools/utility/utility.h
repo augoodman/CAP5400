@@ -23,7 +23,7 @@ class utility
         static void adaptiveSmoothing(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3],
             int sY[3], int ws[3], int threshold[3]);
         static void moreColor(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
-            int moreC[3]);
+            float moreC[3]);
 };
 
 #endif

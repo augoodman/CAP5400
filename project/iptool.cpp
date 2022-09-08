@@ -175,8 +175,28 @@ int main (int argc, char** argv)
         }
 
         else if (strncasecmp(pch,"moreColor",MAXLEN)==0) {
-            pch = strtok(NULL, " ");
+            numROI = atoi(strtok(NULL, " "));
+            cout << "More color function selected for " << numROI << " ROI(s).\n";
+            cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
+            int ROIremaining = numROI;
+            ROIcount = 0;
+            float moreC[3];
+            while (ROIremaining > 0)
+            {
+                cout << "Processing ROI #" << ROIcount + 1 << ".\n";
+                pixelX[ROIcount] = atoi(strtok(NULL, " "));
+                pixelY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+                sX[ROIcount] = atoi(strtok(NULL, " "));
+                sY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+                moreC[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Color multiplication value is: " << moreC[ROIcount] << "\n";
+                --ROIremaining;
+                ++ROIcount;
+            }
             utility::moreColor(src, tgt, numROI, pixelX, pixelY, sX, sY, moreC);
+            cout << "\n";
         }
 
 		else {

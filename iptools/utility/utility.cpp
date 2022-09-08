@@ -1,5 +1,4 @@
 #include "utility.h"
-#include <cstdlib>
 
 #define MAXRGB 255
 #define MINRGB 0
@@ -119,16 +118,13 @@ void utility::scale(image &src, image &tgt, float ratio)
 	{
 		for (int j=0; j<cols; j++)
 		{	
-			/* Map the pixel of new image back to original image */
 			int i2 = (int)floor((float)i/ratio);
 			int j2 = (int)floor((float)j/ratio);
 			if (ratio == 2) {
-				/* Directly copy the value */
 				tgt.setPixel(i,j,checkValue(src.getPixel(i2,j2)));
 			}
 
 			if (ratio == 0.5) {
-				/* Average the values of four pixels */
 				int value = src.getPixel(i2,j2) + src.getPixel(i2,j2+1) + src.getPixel(i2+1,j2) + src.getPixel(i2+1,j2+1);
 				tgt.setPixel(i,j,checkValue(value/4));
 			}
@@ -150,7 +146,6 @@ void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3]
                 if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
                     j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
                 {
-                    //for loop to iterate through window summing gray values
                     int sum = 0;
                     for (int k = 0; k < ws[ROIcount - 1]; k++)
                         for (int l = 0; l < ws[ROIcount - 1]; l++)
@@ -158,7 +153,6 @@ void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3]
                                 sum += src.getPixel(i + k, j + l);
                             else
                                 ++outside;
-                    //divide sum by ws^2
                     tgt.setPixel(i, j, checkValue(sum / ((ws[ROIcount - 1] * ws[ROIcount - 1]) - outside)));
                     outside = 0;
                 }
@@ -183,7 +177,6 @@ void utility::adaptiveSmoothing(image &src, image &tgt, int numROI, int pixelX[3
                 if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
                     j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
                 {
-                    //for loop to iterate through window summing gray values
                     int sum = 0;
                     for (int k = 0; k < ws[ROIcount - 1]; k++)
                         for (int l = 0; l < ws[ROIcount - 1]; l++)
@@ -194,7 +187,6 @@ void utility::adaptiveSmoothing(image &src, image &tgt, int numROI, int pixelX[3
                                 ++outside;
                             if (abs((sum / (ws[ROIcount - 1] * ws[ROIcount - 1])) - src.getPixel(i+k, j+l)) <
                                 threshold[ROIcount - 1])
-                                //divide sum by ws^2
                                 tgt.setPixel(i, j, checkValue(sum / ((ws[ROIcount - 1] * ws[ROIcount - 1]) - outside)));
                             else
                                 tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
@@ -208,7 +200,28 @@ void utility::adaptiveSmoothing(image &src, image &tgt, int numROI, int pixelX[3
     }
 }
 
-void utility::moreColor(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int moreC[3])
+void utility::moreColor(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], float moreC[3])
 {
-
+    tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
+    int ROIcount = 1;
+    while (numROI > 0)
+    {
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
+                {
+                    tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED) * moreC[ROIcount - 1]));
+                    tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN) * moreC[ROIcount - 1]));
+                    tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE) * moreC[ROIcount - 1]));
+                }
+                else if (ROIcount == 1)
+                {
+                    tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED)));
+                    tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN)));
+                    tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE)));
+                }
+        --numROI;
+        ++ROIcount;
+    }
 }
