@@ -1,7 +1,5 @@
-baboon.pgm baboon_bi.pgm binarize 3 50 50 50 50 0 125 75 75 75 75 0 200 100 100 100 100 1 100 150
-baboon.pgm baboon_add.pgm add 3 50 50 50 50 50 100 100 100 100 -50 75 75 75 75 100
-baboon.pgm baboon_s200.pgm scale 2
-baboon.pgm baboon_s50.pgm scale 0.5
-baboon.pgm baboon_us.pgm uniformSmoothing 3 0 0 100 100 7 0 100 100 100 5 0 200 100 100 3
-baboon.pgm baboon_as.pgm adaptiveSmoothing 3 0 0 200 200 3 15 0 200 150 150 5 30 300 200 100 100 3 45
-baboon.ppm baboon_mc.ppm moreColor 3 50 50 50 50 1.5 100 100 100 100 2 75 75 75 75 0.5
+baboon.pgm baboon_add.pgm 3 50 50 50 50 add 125 75 75 75 75 add -50 200 100 100 100 add 50
+baboon.pgm baboon_binarize.pgm 3 50 50 50 50 binarize 125 75 75 75 75 binarize 75 200 100 100 100 binarize 150
+baboon.pgm baboon_uniformsmooth.pgm 3 50 50 50 50 uniformsmooth 3 75 75 75 75 uniformsmooth 5 200 100 100 100 uniformsmooth 7
+baboon.pgm baboon_adptvsmooth.pgm 3 50 50 50 50 adptvsmooth 7 25 75 75 75 75 adptvsmooth 5 50 200 100 100 100 adptvsmooth 3 75
+baboon.ppm baboon_mulcolorbright.ppm 3 50 50 50 50 mulcolorbright 1.5 0.9 0.9 75 75 75 75 mulcolorbright 0.9 1.5 0.9 200 100 100 100 mulcolorbright 0.9 0.9 1.5

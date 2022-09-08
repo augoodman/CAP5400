@@ -27,7 +27,7 @@ bool utility::isInBounds(int x, int y, image &src)
 }
 
 /*-----------------------------------------------------------------------**/
-void utility::addGrey(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3])
+void utility::add(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3])
 {
 	tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -47,7 +47,7 @@ void utility::addGrey(image &src, image &tgt, int numROI, int pixelX[3], int pix
 
 /*-----------------------------------------------------------------------**/
 void utility::binarize(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
-                       bool isDouble[3], int threshold1[3], int threshold2[3])
+                       int threshold[3])
 {
 	tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -55,84 +55,24 @@ void utility::binarize(image &src, image &tgt, int numROI, int pixelX[3], int pi
     {
         for (int i = 0; i < src.getNumberOfRows(); i++)
             for (int j = 0; j < src.getNumberOfColumns(); j++)
-                if (!isDouble[ROIcount - 1]) {
-                    if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
-                    src.getPixel(i, j) < threshold1[ROIcount - 1])
-                        tgt.setPixel(i, j, MINRGB);
-                    else if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
-                    src.getPixel(i, j) >= threshold1[ROIcount - 1])
-                        tgt.setPixel(i, j, MAXRGB);
-                    else if (ROIcount == 1)
-                        tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
-                }
-                else
-                {
-                    if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
-                    src.getPixel(i, j) < threshold1[ROIcount - 1])
-                        tgt.setPixel(i, j, MINRGB);
-                    else if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
-                    src.getPixel(i, j) > threshold2[ROIcount - 1])
-                        tgt.setPixel(i, j, MINRGB);
-                    else if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
-                    src.getPixel(i, j) > threshold1[ROIcount - 1] && src.getPixel(i, j ) < threshold2[ROIcount - 1])
-                        tgt.setPixel(i, j, MAXRGB);
-                    else if (ROIcount == 1)
-                        tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
-                }
+            {
+                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
+                src.getPixel(i, j) < threshold[ROIcount - 1])
+                    tgt.setPixel(i, j, MINRGB);
+                else if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1] &&
+                src.getPixel(i, j) >= threshold[ROIcount - 1])
+                    tgt.setPixel(i, j, MAXRGB);
+                else if (ROIcount == 1)
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+            }
         --numROI;
         ++ROIcount;
     }
 }
 
-/*-----------------------------------------------------------------------
-void utility::doubleThreshold(image &src, image &tgt, int threshold)
-{
-    tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
-    for (int i=0; i<src.getNumberOfRows(); i++)
-    {
-        for (int j=0; j<src.getNumberOfColumns(); j++)
-        {
-            if (src.getPixel(i,j) > threshold + 50)
-                tgt.setPixel(i,j,MINRGB);
-            else if (src.getPixel(i,j) < threshold - 50)
-                tgt.setPixel(i,j,MINRGB);
-            else
-                tgt.setPixel(i,j,MAXRGB);
-        }
-    }
-}
------------------------------------------------------------------------**/
-
-/*-----------------------------------------------------------------------**/
-void utility::scale(image &src, image &tgt, float ratio)
-{
-	int rows = (int)((float)src.getNumberOfRows() * ratio);
-	int cols  = (int)((float)src.getNumberOfColumns() * ratio);
-	tgt.resize(rows, cols);
-	for (int i=0; i<rows; i++)
-	{
-		for (int j=0; j<cols; j++)
-		{	
-			int i2 = (int)floor((float)i/ratio);
-			int j2 = (int)floor((float)j/ratio);
-			if (ratio == 2) {
-				tgt.setPixel(i,j,checkValue(src.getPixel(i2,j2)));
-			}
-
-			if (ratio == 0.5) {
-				int value = src.getPixel(i2,j2) + src.getPixel(i2,j2+1) + src.getPixel(i2+1,j2) + src.getPixel(i2+1,j2+1);
-				tgt.setPixel(i,j,checkValue(value/4));
-			}
-		}
-	}
-}
-
-void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int ws[3])
+void utility::uniformsmooth(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int ws[3])
 {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -149,7 +89,7 @@ void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3]
                     int sum = 0;
                     for (int k = 0; k < ws[ROIcount - 1]; k++)
                         for (int l = 0; l < ws[ROIcount - 1]; l++)
-                            if (i + k < src.getNumberOfColumns() && j + l < src.getNumberOfRows())
+                            if (i + k <= src.getNumberOfColumns() && j + l <= src.getNumberOfRows())
                                 sum += src.getPixel(i + k, j + l);
                             else
                                 ++outside;
@@ -163,7 +103,7 @@ void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3]
     }
 }
 
-void utility::adaptiveSmoothing(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int ws[3], int threshold[3])
+void utility::adptvsmooth(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int ws[3], int threshold[3])
 {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -200,7 +140,7 @@ void utility::adaptiveSmoothing(image &src, image &tgt, int numROI, int pixelX[3
     }
 }
 
-void utility::moreColor(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], float moreC[3])
+void utility::mulcolorbright(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], float redScale[3], float greenScale[3], float blueScale[3])
 {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -211,9 +151,9 @@ void utility::moreColor(image &src, image &tgt, int numROI, int pixelX[3], int p
                 if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
                     j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
                 {
-                    tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED) * moreC[ROIcount - 1]));
-                    tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN) * moreC[ROIcount - 1]));
-                    tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE) * moreC[ROIcount - 1]));
+                    tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED) * redScale[ROIcount - 1]));
+                    tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN) * greenScale[ROIcount - 1]));
+                    tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE) * blueScale[ROIcount - 1]));
                 }
                 else if (ROIcount == 1)
                 {
