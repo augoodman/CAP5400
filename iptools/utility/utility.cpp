@@ -1,4 +1,5 @@
 #include "utility.h"
+#include <cstdlib>
 
 #define MAXRGB 255
 #define MINRGB 0
@@ -139,6 +140,7 @@ void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3]
 {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
+    int outside = 0;
     while (numROI > 0)
     {
         if (ws[ROIcount - 1] % 2 == 0)
@@ -152,10 +154,13 @@ void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3]
                     int sum = 0;
                     for (int k = 0; k < ws[ROIcount - 1]; k++)
                         for (int l = 0; l < ws[ROIcount - 1]; l++)
-                            if (i + k <= src.getNumberOfColumns() + 1 && j + l <= src.getNumberOfRows() + 1)
+                            if (i + k < src.getNumberOfColumns() && j + l < src.getNumberOfRows())
                                 sum += src.getPixel(i + k, j + l);
+                            else
+                                ++outside;
                     //divide sum by ws^2
-                    tgt.setPixel(i, j, checkValue(sum / (ws[ROIcount - 1] * ws[ROIcount - 1])));
+                    tgt.setPixel(i, j, checkValue(sum / ((ws[ROIcount - 1] * ws[ROIcount - 1]) - outside)));
+                    outside = 0;
                 }
                 else if (ROIcount == 1)
                     tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
@@ -166,7 +171,41 @@ void utility::uniformSmoothing(image &src, image &tgt, int numROI, int pixelX[3]
 
 void utility::adaptiveSmoothing(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int ws[3], int threshold[3])
 {
-
+    tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
+    int ROIcount = 1;
+    int outside = 0;
+    while (numROI > 0)
+    {
+        if (ws[ROIcount - 1] % 2 == 0)
+            ws[ROIcount -1] += 1;
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
+                {
+                    //for loop to iterate through window summing gray values
+                    int sum = 0;
+                    for (int k = 0; k < ws[ROIcount - 1]; k++)
+                        for (int l = 0; l < ws[ROIcount - 1]; l++)
+                        {
+                            if (i + k <= src.getNumberOfColumns() + 1 && j + l <= src.getNumberOfRows() + 1)
+                                sum += src.getPixel(i + k, j + l);
+                            else
+                                ++outside;
+                            if (abs((sum / (ws[ROIcount - 1] * ws[ROIcount - 1])) - src.getPixel(i+k, j+l)) <
+                                threshold[ROIcount - 1])
+                                //divide sum by ws^2
+                                tgt.setPixel(i, j, checkValue(sum / ((ws[ROIcount - 1] * ws[ROIcount - 1]) - outside)));
+                            else
+                                tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+                            outside = 0;
+                        }
+                }
+                else if (ROIcount == 1)
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+        --numROI;
+        ++ROIcount;
+    }
 }
 
 void utility::moreColor(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int moreC[3])

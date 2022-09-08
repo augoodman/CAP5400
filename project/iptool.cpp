@@ -130,9 +130,6 @@ int main (int argc, char** argv)
             cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
             int ROIremaining = numROI;
             ROIcount = 0;
-            bool isDouble[3];
-            int threshold1[3];
-            int threshold2[3];
             while (ROIremaining > 0)
             {
                 cout << "Processing ROI #" << ROIcount + 1 << ".\n";
@@ -152,8 +149,29 @@ int main (int argc, char** argv)
         }
 
         else if (strncasecmp(pch,"adaptiveSmoothing",MAXLEN)==0) {
-            pch = strtok(NULL, " ");
+            numROI = atoi(strtok(NULL, " "));
+            cout << "Adaptive smoothing function selected for " << numROI << " ROI(s).\n";
+            cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
+            int ROIremaining = numROI;
+            ROIcount = 0;
+            while (ROIremaining > 0)
+            {
+                cout << "Processing ROI #" << ROIcount + 1 << ".\n";
+                pixelX[ROIcount] = atoi(strtok(NULL, " "));
+                pixelY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+                sX[ROIcount] = atoi(strtok(NULL, " "));
+                sY[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+                ws[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "Window size: " << ws[ROIcount] << "\n";
+                threshold[ROIcount] = atoi(strtok(NULL, " "));
+                cout << "Threshold value: " << threshold[ROIcount] << "\n";
+                --ROIremaining;
+                ++ROIcount;
+            }
             utility::adaptiveSmoothing(src, tgt, numROI, pixelX, pixelY, sX, sY, ws, threshold);
+            cout << "\n";
         }
 
         else if (strncasecmp(pch,"moreColor",MAXLEN)==0) {
