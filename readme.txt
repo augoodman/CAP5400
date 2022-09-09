@@ -21,28 +21,36 @@ As a result you should get iptool in project/bin directory.
 
 *** FUNCTIONS ***
 
-1. Add intensity: add
-Increase the intensity for a gray-level image.
+1. Increase/decrease grayscale value: add
+Increase/decrease the intensity for a gray-level image.
 
-2. Binarization: binarize
+2. Binarize an image: binarize
 Binarize the pixels with the threshold.
 
-3. Binarization with double thresholding: doubleThreshold
-Binarize the pixels with a range of -50 < threshold < 50
+3. Apply uniform smoothing: uniform smooth
+Smooth pixels uniformly.
 
-4. Scaling: Scale
-Reduce or expand the heigh and width with two scale factors.
-Scaling factor = 2: double height and width of the input image.
-Scaling factor = 0.5: half height and width of the input image.
+4. Apply adaptive smoothing: adptvsmooth
+Smooth pixels under a threshold.
 
+5. Scale RGB values: mulcolorbright
+Scale RGB values of a pixel.
 
 *** PARAMETERS FILE ***
 
-There are for parameters:
+There are five types of parameters:
 1. the input file name;
 2. the output file name;
-3. the name of the filter. Use "add", "binarize", and "scale" for your filters;
-4. the value for adding intensity, threshold value for binarize filters, or the scaling factor for scale filter.
-
+3. the number of ROI; 
+4. for each ROI:
+   a. starting location (x and y values)
+   b. dimensions (width and height values)
+   c. function name
+5. function specific:
+   a. add: value
+   b. binarize: threshold
+   c. uniformsmooth: window size 
+   a. adptvsmooth: window size, threshold
+   b. mulcolorbright: red scalar, green scalar, blue scalar
 
 *** Run the program: ./iptool parameters.txt
