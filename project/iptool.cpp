@@ -25,36 +25,33 @@ using namespace std;
 
 #define MAXLEN 256
 
-int main (int argc, char** argv)
-{
-	image src, tgt;
-	FILE *fp;
-	char str[MAXLEN];
-	char outfile[MAXLEN];
-	char *pch;
+int main(int argc, char **argv) {
+    image src, tgt;
+    FILE *fp;
+    char str[MAXLEN];
+    char outfile[MAXLEN];
+    char *pch;
     int numROI, ROIcount;
     int pixelX[3], pixelY[3], sX[3], sY[3], p1[3], p2[3];
     float dr[3], dg[3], db[3];
-	if ((fp = fopen(argv[1],"r")) == NULL) {
-		fprintf(stderr, "Can't open file: %s\n", argv[1]);
-		exit(1);
-	}
+    if ((fp = fopen(argv[1], "r")) == NULL) {
+        fprintf(stderr, "Can't open file: %s\n", argv[1]);
+        exit(1);
+    }
 
-	while(fgets(str,MAXLEN,fp) != NULL) {
-		pch = strtok(str, " ");
-		src.read(pch);
+    while (fgets(str, MAXLEN, fp) != NULL) {
+        pch = strtok(str, " ");
+        src.read(pch);
         cout << "Input file: " << pch << "\n";
         cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
         pch = strtok(NULL, " ");
-		strcpy(outfile, pch);
+        strcpy(outfile, pch);
         cout << "Output file: " << pch << "\n";
-        //pch = strtok(NULL, " ");
         numROI = atoi(strtok(NULL, " "));
         cout << "Processing " << numROI << " ROI(s) total.\n\n";
         int ROIremaining = numROI;
         ROIcount = 0;
-        while (ROIremaining > 0)
-        {
+        while (ROIremaining > 0) {
             cout << "Processing ROI #" << ROIcount + 1 << "...\n";
             pixelX[ROIcount] = atoi(strtok(NULL, " "));
             pixelY[ROIcount] = atoi(strtok(NULL, " "));
@@ -63,49 +60,29 @@ int main (int argc, char** argv)
             sY[ROIcount] = atoi(strtok(NULL, " "));
             cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
             pch = strtok(NULL, " ");
-            if (strncasecmp(pch,"add",MAXLEN)==0)
-            {
+            if (strncasecmp(pch, "add", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Add value is: " << p1[ROIcount] << "\n\n";
                 utility::add(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
-                --ROIremaining;
-                ++ROIcount;
-            }
-            else if (strncasecmp(pch,"binarize",MAXLEN)==0)
-            {
+            } else if (strncasecmp(pch, "binarize", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Threshold value: " << p1[ROIcount] << "\n\n";
                 utility::binarize(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
-                --ROIremaining;
-                ++ROIcount;
-            }
-
-            else if (strncasecmp(pch,"uniformsmooth",MAXLEN)==0)
-            {
+            } else if (strncasecmp(pch, "uniformsmooth", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Window size: " << p1[ROIcount] << "\n\n";
-                utility::uniformsmooth(src,tgt, numROI, pixelX, pixelY, sX, sY, p1);
-                --ROIremaining;
-                ++ROIcount;
-            }
-
-            else if (strncasecmp(pch,"adptvsmooth",MAXLEN)==0)
-            {
+                utility::uniformsmooth(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+            } else if (strncasecmp(pch, "adptvsmooth", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Window size: " << p1[ROIcount] << "\n";
                 p2[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Threshold value: " << p2[ROIcount] << "\n\n";
                 utility::adptvsmooth(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
-                --ROIremaining;
-                ++ROIcount;
-            }
-
-            else if (strncasecmp(pch,"mulcolorbright",MAXLEN)==0)
-            {
+            } else if (strncasecmp(pch, "mulcolorbright", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 dr[ROIcount] = atof(strtok(NULL, " "));
                 cout << "Red channel multiplier: " << dr[ROIcount] << "\n";
@@ -115,19 +92,16 @@ int main (int argc, char** argv)
                 cout << "Blue channel multiplier: " << db[ROIcount] << "\n";
                 utility::mulcolorbright(src, tgt, numROI, pixelX, pixelY, sX, sY, dr, dg, db);
                 cout << "\n";
-                --ROIremaining;
-                ++ROIcount;
-            }
-
-            else
-            {
+            } else {
                 printf("No function: %s\n", pch);
                 continue;
             }
+            --ROIremaining;
+            ++ROIcount;
         }
-		tgt.save(outfile);
-	}
-	fclose(fp);
-	return 0;
+        tgt.save(outfile);
+    }
+    fclose(fp);
+    return 0;
 }
 
