@@ -24,8 +24,7 @@ bool utility::isInBounds(int x, int y, image &src) {
 }
 
 /*-----------------------------------------------------------------------**/
-void
-utility::add(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3]) {
+void utility::histostretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
     while (numROI > 0) {
@@ -42,7 +41,7 @@ utility::add(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], i
 }
 
 /*-----------------------------------------------------------------------**/
-void utility::binarize(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
+void utility::althistostretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
                        int threshold[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -65,7 +64,7 @@ void utility::binarize(image &src, image &tgt, int numROI, int pixelX[3], int pi
     }
 }
 
-void utility::uniformsmooth(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
+void utility::histothres(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
                             int ws[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -80,7 +79,7 @@ void utility::uniformsmooth(image &src, image &tgt, int numROI, int pixelX[3], i
                     int sum = 0;
                     for (int k = 0; k < ws[ROIcount - 1]; k++)
                         for (int l = 0; l < ws[ROIcount - 1]; l++)
-                            if (i + k <= src.getNumberOfColumns() && j + l <= src.getNumberOfRows())
+                            if (i + k <= src.getNumberOfColumns() + 1 && j + l <= src.getNumberOfRows() + 1)
                                 sum += src.getPixel(i + k - ws[ROIcount - 1] / 2, j + l - ws[ROIcount - 1] / 2);
                             else
                                 ++outside;
@@ -93,8 +92,7 @@ void utility::uniformsmooth(image &src, image &tgt, int numROI, int pixelX[3], i
     }
 }
 
-void
-utility::adptvsmooth(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int ws[3],
+void utility::percchastretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int ws[3],
                      int threshold[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
@@ -127,15 +125,15 @@ utility::adptvsmooth(image &src, image &tgt, int numROI, int pixelX[3], int pixe
     }
 }
 
-void utility::mulcolorbright(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
+void utility::rgbstretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
                              float redScale[3], float greenScale[3], float blueScale[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
-    if(redScale[ROIcount - 1] < 0)
+    if (redScale[ROIcount - 1] < 0)
         redScale[ROIcount - 1] *= -1;
-    if(greenScale[ROIcount - 1] < 0)
+    if (greenScale[ROIcount - 1] < 0)
         greenScale[ROIcount - 1] *= -1;
-    if(blueScale[ROIcount - 1] < 0)
+    if (blueScale[ROIcount - 1] < 0)
         blueScale[ROIcount - 1] *= -1;
     while (numROI > 0) {
         for (int i = 0; i < src.getNumberOfRows(); i++)
@@ -150,6 +148,74 @@ void utility::mulcolorbright(image &src, image &tgt, int numROI, int pixelX[3], 
                     tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN)));
                     tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE)));
                 }
+        --numROI;
+        ++ROIcount;
+    }
+}
+
+/*-----------------------------------------------------------------------**/
+void utility::istretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3]) {
+    tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
+    int ROIcount = 1;
+    while (numROI > 0) {
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + value[ROIcount - 1]));
+                else if (ROIcount == 1)
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+        --numROI;
+        ++ROIcount;
+    }
+}
+
+/*-----------------------------------------------------------------------**/
+void utility::hstretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3]) {
+    tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
+    int ROIcount = 1;
+    while (numROI > 0) {
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + value[ROIcount - 1]));
+                else if (ROIcount == 1)
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+        --numROI;
+        ++ROIcount;
+    }
+}
+
+/*-----------------------------------------------------------------------**/
+void utility::sstretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3]) {
+    tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
+    int ROIcount = 1;
+    while (numROI > 0) {
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + value[ROIcount - 1]));
+                else if (ROIcount == 1)
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+        --numROI;
+        ++ROIcount;
+    }
+}
+
+/*-----------------------------------------------------------------------**/
+void utility::fullhsistretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3]) {
+    tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
+    int ROIcount = 1;
+    while (numROI > 0) {
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + value[ROIcount - 1]));
+                else if (ROIcount == 1)
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
         --numROI;
         ++ROIcount;
     }

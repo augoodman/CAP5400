@@ -60,29 +60,29 @@ int main(int argc, char **argv) {
             sY[ROIcount] = atoi(strtok(NULL, " "));
             cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
             pch = strtok(NULL, " ");
-            if (strncasecmp(pch, "add", MAXLEN) == 0) {
+            if (strncasecmp(pch, "histostretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Add value is: " << p1[ROIcount] << "\n\n";
-                utility::add(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
-            } else if (strncasecmp(pch, "binarize", MAXLEN) == 0) {
+                utility::histostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+            } else if (strncasecmp(pch, "althistostretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Threshold value: " << p1[ROIcount] << "\n\n";
-                utility::binarize(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
-            } else if (strncasecmp(pch, "uniformsmooth", MAXLEN) == 0) {
+                utility::althistostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+            } else if (strncasecmp(pch, "histothres", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Window size: " << p1[ROIcount] << "\n\n";
-                utility::uniformsmooth(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
-            } else if (strncasecmp(pch, "adptvsmooth", MAXLEN) == 0) {
+                utility::histothres(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+            } else if (strncasecmp(pch, "percchastretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Window size: " << p1[ROIcount] << "\n";
                 p2[ROIcount] = atoi(strtok(NULL, " "));
                 cout << "Threshold value: " << p2[ROIcount] << "\n\n";
-                utility::adptvsmooth(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
-            } else if (strncasecmp(pch, "mulcolorbright", MAXLEN) == 0) {
+                utility::percchastretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
+            } else if (strncasecmp(pch, "rgbstretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 dr[ROIcount] = atof(strtok(NULL, " "));
                 cout << "Red channel multiplier: " << dr[ROIcount] << "\n";
@@ -90,7 +90,47 @@ int main(int argc, char **argv) {
                 cout << "Green channel multiplier: " << dg[ROIcount] << "\n";
                 db[ROIcount] = atof(strtok(NULL, " "));
                 cout << "Blue channel multiplier: " << db[ROIcount] << "\n";
-                utility::mulcolorbright(src, tgt, numROI, pixelX, pixelY, sX, sY, dr, dg, db);
+                utility::rgbstretch(src, tgt, numROI, pixelX, pixelY, sX, sY, dr, dg, db);
+                cout << "\n";
+            } else if (strncasecmp(pch, "istretch", MAXLEN) == 0) {
+                cout << "ROI function: " << pch << "\n";
+                dr[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Red channel multiplier: " << dr[ROIcount] << "\n";
+                dg[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Green channel multiplier: " << dg[ROIcount] << "\n";
+                db[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Blue channel multiplier: " << db[ROIcount] << "\n";
+                utility::istretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+                cout << "\n";
+            } else if (strncasecmp(pch, "hstretch", MAXLEN) == 0) {
+                cout << "ROI function: " << pch << "\n";
+                dr[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Red channel multiplier: " << dr[ROIcount] << "\n";
+                dg[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Green channel multiplier: " << dg[ROIcount] << "\n";
+                db[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Blue channel multiplier: " << db[ROIcount] << "\n";
+                utility::hstretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+                cout << "\n";
+            } else if (strncasecmp(pch, "sstretch", MAXLEN) == 0) {
+                cout << "ROI function: " << pch << "\n";
+                dr[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Red channel multiplier: " << dr[ROIcount] << "\n";
+                dg[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Green channel multiplier: " << dg[ROIcount] << "\n";
+                db[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Blue channel multiplier: " << db[ROIcount] << "\n";
+                utility::sstretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+                cout << "\n";
+            } else if (strncasecmp(pch, "fullhsistretch", MAXLEN) == 0) {
+                cout << "ROI function: " << pch << "\n";
+                dr[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Red channel multiplier: " << dr[ROIcount] << "\n";
+                dg[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Green channel multiplier: " << dg[ROIcount] << "\n";
+                db[ROIcount] = atof(strtok(NULL, " "));
+                cout << "Blue channel multiplier: " << db[ROIcount] << "\n";
+                utility::fullhsistretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
                 cout << "\n";
             } else {
                 printf("No function: %s\n", pch);

@@ -254,7 +254,7 @@ bool image::read (char * filename)
 	int i,j, flag;
 	
 	if (filename == (char*)NULL) {
-		fprintf(stderr, "\nNeed a imput\n");
+		fprintf(stderr, "\nNeed a input\n");
 		exit(1);
 	}
 
@@ -292,7 +292,7 @@ bool image::read (char * filename)
 	
 	int col, row;
 	
-	/* check for commant line */
+	/* check for command line */
 	char temp = pgm_file.peek();
 	if (isdigit(temp)) {
 		pgm_file >> col;
