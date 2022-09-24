@@ -1,5 +1,1 @@
-baboon.pgm baboon_add.pgm 3 50 50 50 50 add 125 75 75 75 75 add -50 200 100 100 100 add 50
-baboon.pgm baboon_binarize.pgm 3 50 50 50 50 binarize 75 100 200 75 75 binarize 200 200 100 100 100 binarize 150
-baboon.pgm baboon_uniformsmooth.pgm 3 200 50 100 100 uniformsmooth 3 200 200 100 100 uniformsmooth 5 200 400 100 100 uniformsmooth 7
-baboon.pgm baboon_adptvsmooth.pgm 3 200 50 100 100 adptvsmooth 3 25 200 200 100 100 adptvsmooth 5 20 200 400 100 100 adptvsmooth 7 15
-baboon.ppm baboon_mulcolorbright.ppm 3 50 50 100 100 mulcolorbright 1.5 0.9 0.9 200 200 100 100 mulcolorbright 0.9 1.5 0.9 350 350 100 100 mulcolorbright 0.9 0.9 1.5
+baboon.pgm baboon_add.pgm 1 50 50 50 50 histostretch 125 2

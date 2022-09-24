@@ -24,17 +24,36 @@ bool utility::isInBounds(int x, int y, image &src) {
 }
 
 /*-----------------------------------------------------------------------**/
-void utility::histostretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int value[3]) {
+void utility::histostretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int a[3], int b[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 1;
+    int graylevels[256] = {};
+    int max, value, sum = 0;
+    image hist1, hist2;
     while (numROI > 0) {
         for (int i = 0; i < src.getNumberOfRows(); i++)
             for (int j = 0; j < src.getNumberOfColumns(); j++)
                 if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
-                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + value[ROIcount - 1]));
+                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1]) {
+                    graylevels[src.getPixel(pixelX[ROIcount - 1] + i, pixelY[ROIcount - 1] + j)]++;
+                    //tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + a[ROIcount - 1]));
+                }
                 else if (ROIcount == 1)
                     tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+        max = *max_element(graylevels, graylevels+256);
+        for (int i = 0; i < 256; i++)
+            if(graylevels[i] == max) value = i;
+        char* histbefore, histafter;
+        if(ROIcount == 1) histbefore = "histostretch_ROI1_before.pgm";
+        else if (ROIcount == 2) histbefore = "histostretch_ROI2_before.pgm";
+        else if (ROIcount == 3) histbefore = "histostretch_ROI3_before.pgm";
+        hist1.resize(256, 256);
+        for (int i = 0; i < 256; i++)
+            for (int j = 0; j < 256; j++)
+                if (i < ((float)graylevels[j]/max) * (float)256)
+                    hist1.setPixel(256 - i, 256 - j, 0);
+                else hist1.setPixel(256 - i, 256 - j, 255);
+        hist1.save(histbefore);
         --numROI;
         ++ROIcount;
     }
