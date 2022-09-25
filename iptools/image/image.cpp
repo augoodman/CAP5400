@@ -210,7 +210,7 @@ bool image::save (const char* file)
 		outfile << "255\n";
 	}
 
-	if (flag) 
+	if (flag)
 	{
 		for (int i=0; i < data.numRows; i++) 
 		{
