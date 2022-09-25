@@ -2,6 +2,8 @@
 
 #define MAXRGB 255
 #define MINRGB 0
+#define a 0
+#define b 255
 
 std::string utility::intToString(int number) {
     std::stringstream ss;//create a stringstream
@@ -24,36 +26,65 @@ bool utility::isInBounds(int x, int y, image &src) {
 }
 
 /*-----------------------------------------------------------------------**/
-void utility::histostretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int a[3], int b[3]) {
+void utility::histostretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int c[3], int d[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
-    int ROIcount = 1;
-    int graylevels[256] = {};
-    int max, value, sum = 0;
+    int ROIcount = 0;
+    int srcgraylevels[256] = {};
+    int tgtgraylevels[256] = {};
+    int max;
     image hist1, hist2;
     while (numROI > 0) {
+        /*create histogram before stretching*/
         for (int i = 0; i < src.getNumberOfRows(); i++)
             for (int j = 0; j < src.getNumberOfColumns(); j++)
-                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1]) {
-                    graylevels[src.getPixel(pixelX[ROIcount - 1] + i, pixelY[ROIcount - 1] + j)]++;
-                    //tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + a[ROIcount - 1]));
-                }
-                else if (ROIcount == 1)
-                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
-        max = *max_element(graylevels, graylevels+256);
-        for (int i = 0; i < 256; i++)
-            if(graylevels[i] == max) value = i;
-        char* histbefore, histafter;
-        if(ROIcount == 1) histbefore = "histostretch_ROI1_before.pgm";
-        else if (ROIcount == 2) histbefore = "histostretch_ROI2_before.pgm";
-        else if (ROIcount == 3) histbefore = "histostretch_ROI3_before.pgm";
+                if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
+                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount])
+                    srcgraylevels[src.getPixel(i, j)]++;
+        max = *max_element(srcgraylevels, srcgraylevels+256);
+        cout << "Number of rows: " << src.getNumberOfRows() << endl;
+        cout << "Number of columns: " << src.getNumberOfColumns() << endl;
+        cout << "A: " << a << endl;
+        cout << "B: " << b << endl;
+        cout << "Maxima before: " << max << endl;
+        char* histbefore;
+        if(ROIcount == 0) histbefore = "histostretch_ROI1_before.pgm";
+        else if (ROIcount == 1) histbefore = "histostretch_ROI2_before.pgm";
+        else if (ROIcount == 2) histbefore = "histostretch_ROI3_before.pgm";
         hist1.resize(256, 256);
         for (int i = 0; i < 256; i++)
             for (int j = 0; j < 256; j++)
-                if (i < ((float)graylevels[j]/max) * (float)256)
+                if (i < ((float)srcgraylevels[256 - j]/max) * (float)256)
                     hist1.setPixel(256 - i, 256 - j, 0);
                 else hist1.setPixel(256 - i, 256 - j, 255);
         hist1.save(histbefore);
+        /*apply stretching to roi*/
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
+                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount])
+                    tgt.setPixel(i, j, checkValue(
+                            (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                else if (ROIcount == 1)
+                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+        /*create histogram after stretching*/
+        for (int i = 0; i < tgt.getNumberOfRows(); i++)
+            for (int j = 0; j < tgt.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
+                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount])
+                    tgtgraylevels[tgt.getPixel(i, j)]++;
+        max = *max_element(tgtgraylevels, tgtgraylevels+256);
+        cout << "Maxima after: " << max << endl;
+        char* histafter;
+        if(ROIcount == 0) histafter = "histostretch_ROI1_after.pgm";
+        else if (ROIcount == 1) histafter = "histostretch_ROI2_after.pgm";
+        else if (ROIcount == 2) histafter = "histostretch_ROI3_after.pgm";
+        hist2.resize(256, 256);
+        for (int i = 0; i < 256; i++)
+            for (int j = 0; j < 256; j++)
+                if (i < ((float)tgtgraylevels[256 - j]/max) * (float)256)
+                    hist2.setPixel(256 - i, 256 - j, 0);
+                else hist2.setPixel(256 - i, 256 - j, 255);
+        hist2.save(histafter);
         --numROI;
         ++ROIcount;
     }

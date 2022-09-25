@@ -64,9 +64,9 @@ int main(int argc, char **argv) {
             if (strncasecmp(pch, "histostretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "A value is: " << p1[ROIcount] << "\n\n";
+                cout << "C: " << p1[ROIcount] << "\n";
                 p2[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "B value is: " << p2[ROIcount] << "\n\n";
+                cout << "D: " << p2[ROIcount] << "\n";
                 utility::histostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
             } else if (strncasecmp(pch, "althistostretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";

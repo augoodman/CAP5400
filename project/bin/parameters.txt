@@ -1,1 +1,2 @@
-baboon.pgm baboon_add.pgm 1 50 50 50 50 histostretch 125 2
+slope.pgm slope_histostretch.pgm 1 0 0 800 534 histostretch 100 200
+slope.pgm slope_histothres.pgm 1 0 0 800 534 histothres 20 100 200

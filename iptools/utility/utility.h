@@ -17,9 +17,7 @@ public:
 
     static bool isInBounds(int x, int y, image &src);
 
-    static void createhist(image &histogram, image &src, int pixelX, int pixelY, int sX, int sY, int ROIcount);
-
-    static void histostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *a, int *b);
+    static void histostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *c, int *d);
 
     static void althistostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY,
                          int *threshold);
