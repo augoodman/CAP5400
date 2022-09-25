@@ -15,7 +15,20 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Complete 'histostretch' function." />
+    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Complete 'histostretch' function.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.h" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.o" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libiptools.a" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libiptools.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/histostretch_ROI1_after.pgm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/histostretch_ROI1_before.pgm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/iptool" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/iptool" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/parameters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/parameters.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/slope_histostretch.pgm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/slope_histothres.pgm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/iptool.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/iptool.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,7 +82,7 @@
       <option name="presentableId" value="Default" />
       <updated>1663789631004</updated>
       <workItem from="1663789633296" duration="2872000" />
-      <workItem from="1664045343877" duration="26617000" />
+      <workItem from="1664045343877" duration="38808000" />
     </task>
     <task id="LOCAL-00001" summary="Create assignment 2 with boiler plate code">
       <created>1663790983020</created>
@@ -92,7 +105,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664134825240</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Complete 'histostretch' function.">
+      <created>1664135226626</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664135226626</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Complete 'histostretch' function.">
+      <created>1664135251801</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664135251801</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

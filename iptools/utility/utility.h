@@ -17,13 +17,12 @@ public:
 
     static bool isInBounds(int x, int y, image &src);
 
-    static void histostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *c, int *d);
+    static void histostretch(image &src, image &tgt, char *infile, char *outfile, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *c, int *d);
 
     static void althistostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY,
                          int *threshold);
 
-    static void histothres(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3],
-                              int sY[3], int ws[3]);
+    static void histothres(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *t, int *c, int *d);
 
     static void percchastretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3],
                             int sY[3], int ws[3], int threshold[3]);

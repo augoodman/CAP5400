@@ -1,2 +1,1 @@
-slope.pgm slope_histostretch.pgm 1 0 0 800 534 histostretch 100 200
-slope.pgm slope_histothres.pgm 1 0 0 800 534 histothres 20 100 200 
+slope.pgm slope_histostretch.pgm 3 50 50 100 100 histostretch 50 200 150 150 100 100 histostretch 25 175 250 250 100 100 histostretch 100 250 
