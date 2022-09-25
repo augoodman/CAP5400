@@ -1,1 +1,2 @@
-slope.pgm slope_histostretch.pgm 3 50 50 100 100 histostretch 50 200 150 150 100 100 histostretch 25 175 250 250 100 100 histostretch 100 250 
+baboon.pgm baboon_histostretch.pgm 3 50 50 100 100 histostretch 50 200 150 150 100 100 histostretch 25 175 250 250 100 100 histostretch 100 250 
+slope.pgm slope_histothres.pgm 3 50 50 100 100 histothres 150 125 200 150 150 100 100 histothres 150 125 175 250 250 100 100 histothres 150 125 175

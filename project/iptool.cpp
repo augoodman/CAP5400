@@ -60,7 +60,6 @@ int main(int argc, char **argv) {
             sY[ROIcount] = atoi(strtok(NULL, " "));
             pch = strtok(NULL, " ");
             if (strncasecmp(pch, "histostretch", MAXLEN) == 0) {
-                //cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 p2[ROIcount] = atoi(strtok(NULL, " "));
                 if(!called[0]) called[0] = true;
@@ -70,10 +69,10 @@ int main(int argc, char **argv) {
                 cout << "Threshold value: " << p1[ROIcount] << "\n\n";
                 utility::althistostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
             } else if (strncasecmp(pch, "histothres", MAXLEN) == 0) {
-                cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Window size: " << p1[ROIcount] << "\n\n";
-                utility::histothres(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2, p3);
+                p2[ROIcount] = atoi(strtok(NULL, " "));
+                p3[ROIcount] = atoi(strtok(NULL, " "));
+                if(!called[2]) called[2] = true;
             } else if (strncasecmp(pch, "percchastretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
@@ -138,9 +137,14 @@ int main(int argc, char **argv) {
             --ROIremaining;
             ++ROIcount;
         }
+
         if(called[0]){
-            utility::histostretch(src, tgt, infile, outfile, numROI, pixelX, pixelY, sX, sY, p1, p2);
-            called[0] = false;
+            utility::histostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
+            called[0] = 0;
+        }
+        if(called[2]) {
+            utility::histothres(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2, p3);
+            called[2] = 0;
         }
         tgt.save(outfile);
     }
