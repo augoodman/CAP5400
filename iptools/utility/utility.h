@@ -26,8 +26,7 @@ public:
     static void percchastrech(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3],
                             int sY[3], int *channel, int *c, int *d);
 
-    static void rgbstretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
-                           float redScale[3], float greenScale[3], float blueScale[3]);
+    static void rgbstretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY,int *c, int *d);
 
     static void istretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *value);
 

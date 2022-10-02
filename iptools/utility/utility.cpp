@@ -167,13 +167,13 @@ void utility::percchastrech(image &src, image &tgt, int numROI, int pixelX[3], i
                     j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
                         if (channel[ROIcount] == RED)
                             tgt.setPixel(i, j, RED, checkValue(
-                                    (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                                    (src.getPixel(i, j, RED) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
                         else if (channel[ROIcount] == GREEN)
                             tgt.setPixel(i, j, GREEN, checkValue(
-                                    (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                                    (src.getPixel(i, j, GREEN) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
                         else if (channel[ROIcount] == BLUE)
                             tgt.setPixel(i, j, BLUE, checkValue(
-                                    (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                                    (src.getPixel(i, j, BLUE) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
                     }
         --numROI;
         ++ROIcount;
@@ -181,32 +181,34 @@ void utility::percchastrech(image &src, image &tgt, int numROI, int pixelX[3], i
     cout << endl;
 }
 
-void utility::rgbstretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
-                             float redScale[3], float greenScale[3], float blueScale[3]) {
+void utility::rgbstretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int c[3], int d[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
-    int ROIcount = 1;
-    if (redScale[ROIcount - 1] < 0)
-        redScale[ROIcount - 1] *= -1;
-    if (greenScale[ROIcount - 1] < 0)
-        greenScale[ROIcount - 1] *= -1;
-    if (blueScale[ROIcount - 1] < 0)
-        blueScale[ROIcount - 1] *= -1;
+    int ROIcount = 0;
     while (numROI > 0) {
-        for (int i = 0; i < src.getNumberOfRows(); i++)
-            for (int j = 0; j < src.getNumberOfColumns(); j++)
-                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1]) {
-                    tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED) * abs(redScale[ROIcount - 1])));
-                    tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN) * abs(greenScale[ROIcount - 1])));
-                    tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE) * abs(blueScale[ROIcount - 1])));
-                } else if (ROIcount == 1) {
+        cout << "Processing ROI #" << ROIcount + 1 << "...\n";
+        cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+        cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+        cout << "ROI function: rgbstretch" << endl;
+        /*apply color channel stretching to roi*/
+        if (ROIcount == 0)
+            for (int i = 0; i < src.getNumberOfRows(); i++)
+                for (int j = 0; j < src.getNumberOfColumns(); j++) {
                     tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED)));
                     tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN)));
                     tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE)));
                 }
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++)
+                if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
+                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
+                        tgt.setPixel(i, j, RED, checkValue((src.getPixel(i, j, RED) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                        tgt.setPixel(i, j, GREEN, checkValue((src.getPixel(i, j, GREEN) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                        tgt.setPixel(i, j, BLUE, checkValue((src.getPixel(i, j, BLUE) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                }
         --numROI;
         ++ROIcount;
     }
+    cout << endl;
 }
 
 /*-----------------------------------------------------------------------**/
