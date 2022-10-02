@@ -44,13 +44,13 @@ int main(int argc, char **argv) {
         pch = strtok(str, " ");
         src.read(pch);
         strcpy(infile, pch);
-        cout << "Input file: " << infile << "\n";
-        cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << "\n";
+        cout << "Input file: " << infile << endl;
+        cout << "Resolution: " << src.getNumberOfRows() << "x" << src.getNumberOfColumns() << endl;
         pch = strtok(NULL, " ");
         strcpy(outfile, pch);
-        cout << "Output file: " << outfile << "\n";
+        cout << "Output file: " << outfile << endl;
         numROI = atoi(strtok(NULL, " "));
-        cout << "Processing " << numROI << " ROI(s) total.\n\n";
+        cout << "Processing " << numROI << " ROI(s) total." << endl;
         int ROIremaining = numROI;
         ROIcount = 0;
         while (ROIremaining > 0) {
@@ -75,7 +75,8 @@ int main(int argc, char **argv) {
             } else if (strncasecmp(pch, "percchastrech", MAXLEN) == 0) {
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 p2[ROIcount] = atoi(strtok(NULL, " "));
-                if(!called[2]) called[2] = true;
+                p3[ROIcount] = atoi(strtok(NULL, " "));
+                if(!called[3]) called[3] = true;
             } else if (strncasecmp(pch, "rgbstretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 dr[ROIcount] = atof(strtok(NULL, " "));
@@ -155,4 +156,3 @@ int main(int argc, char **argv) {
     fclose(fp);
     return 0;
 }
-

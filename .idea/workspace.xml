@@ -15,25 +15,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Complete 'histothres' function.">
+    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Improve 'after' histogram presentation and refactor code.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iptools/utility/utility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.h" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iptools/utility/utility.o" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/libiptools.a" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libiptools.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_histostretch_ROI1.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_histostretch_ROI2.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_histostretch_ROI3.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_histothres_ROI1.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_histothres_ROI2.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_histothres_ROI3.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/baboon_histostretch.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/baboon_histostretch.pgm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_histostretch_ROI1.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_histostretch_ROI2.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_histostretch_ROI3.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_histothres_ROI1.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_histothres_ROI2.pgm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_histothres_ROI3.pgm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI1.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI1.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI2.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI2.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI3.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI3.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI1.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI1.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI2.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI2.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI3.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI3.pgm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/bin/iptool" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/iptool" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/bin/parameters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/parameters.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/iptool.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/iptool.cpp" afterDir="false" />
@@ -97,7 +89,7 @@
       <updated>1663789631004</updated>
       <workItem from="1663789633296" duration="2872000" />
       <workItem from="1664045343877" duration="42358000" />
-      <workItem from="1664738963075" duration="2234000" />
+      <workItem from="1664738963075" duration="4086000" />
     </task>
     <task id="LOCAL-00001" summary="Create assignment 2 with boiler plate code">
       <created>1663790983020</created>
@@ -155,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664150147635</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Improve 'after' histogram presentation and refactor code.">
+      <created>1664741702814</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1664741702814</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +188,7 @@
     <MESSAGE value="Complete 'histostretch' function." />
     <MESSAGE value="Fix control flow." />
     <MESSAGE value="Complete 'histothres' function." />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete 'histothres' function." />
+    <MESSAGE value="Improve 'after' histogram presentation and refactor code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve 'after' histogram presentation and refactor code." />
   </component>
 </project>

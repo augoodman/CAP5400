@@ -30,7 +30,6 @@ bool utility::isInBounds(int x, int y, image &src) {
 void utility::histostretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int c[3], int d[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 0;
-    image hist1, hist2;
     while (numROI > 0) {
         cout << "Processing ROI #" << ROIcount + 1 << "...\n";
         cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
@@ -51,6 +50,7 @@ void utility::histostretch(image &src, image &tgt, int numROI, int pixelX[3], in
         --numROI;
         ++ROIcount;
     }
+    cout << endl;
 }
 
 /*-----------------------------------------------------------------------**/
@@ -74,7 +74,7 @@ void utility::althistostretch(image &src, image &tgt, int numROI, int pixelX[3],
                     graylevels[src.getPixel(i, j)]++;
         max = *max_element(graylevels, graylevels+256);
         cout << "C: " << c[ROIcount] << endl;
-        cout << "D: " << d[ROIcount] << "\n\n";
+        cout << "D: " << d[ROIcount] << endl;
         hist1.resize(256, 256);
         for (int i = 0; i < 256; i++)
             for (int j = 0; j < 256; j++)
@@ -116,19 +116,18 @@ void utility::althistostretch(image &src, image &tgt, int numROI, int pixelX[3],
         --numROI;
         ++ROIcount;
     }
-    for(int i = 0; i < 256; i++) graylevels[i] = 0;
+    cout << endl;
 }
 
 void utility::histothres(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int t[3], int c[3], int d[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 0;
-    image hist1, hist2;
     while (numROI > 0) {
         cout << "Processing ROI #" << ROIcount + 1 << "...\n";
         cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
         cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
         cout << "ROI function: histothres" << endl;
-        /*apply stretching to roi*/
+        /*apply threshold stretching to roi*/
         if (ROIcount == 0)
             for (int i = 0; i < src.getNumberOfRows(); i++)
                 for (int j = 0; j < src.getNumberOfColumns(); j++)
@@ -142,33 +141,44 @@ void utility::histothres(image &src, image &tgt, int numROI, int pixelX[3], int 
         --numROI;
         ++ROIcount;
     }
+    cout << endl;
 }
 
 void utility::percchastrech(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3], int channel[3],
                      int c[3], int d[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     int ROIcount = 0;
-    image hist1, hist2;
     while (numROI > 0) {
         cout << "Processing ROI #" << ROIcount + 1 << "...\n";
         cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
         cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
-        cout << "ROI function: histostretch" << endl;
-        /*apply stretching to roi*/
+        cout << "ROI function: percchastrech" << endl;
+        /*apply color channel stretching to roi*/
         if (ROIcount == 0)
             for (int i = 0; i < src.getNumberOfRows(); i++)
-                for (int j = 0; j < src.getNumberOfColumns(); j++)
-                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+                for (int j = 0; j < src.getNumberOfColumns(); j++) {
+                        tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED)));
+                        tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN)));
+                        tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE)));
+                }
         for (int i = 0; i < src.getNumberOfRows(); i++)
             for (int j = 0; j < src.getNumberOfColumns(); j++)
                 if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
-                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount])
-                    tgt.setPixel(i, j, checkValue(
-                            (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
-
+                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
+                        if (channel[ROIcount] == RED)
+                            tgt.setPixel(i, j, RED, checkValue(
+                                    (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                        else if (channel[ROIcount] == GREEN)
+                            tgt.setPixel(i, j, GREEN, checkValue(
+                                    (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                        else if (channel[ROIcount] == BLUE)
+                            tgt.setPixel(i, j, BLUE, checkValue(
+                                    (src.getPixel(i, j) - (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05))) + a);
+                    }
         --numROI;
         ++ROIcount;
     }
+    cout << endl;
 }
 
 void utility::rgbstretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
