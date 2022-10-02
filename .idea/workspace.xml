@@ -15,22 +15,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Comple 'percchanstrech' function.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.h" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.o" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libiptools.a" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libiptools.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI1.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI1.pgm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI2.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI2.pgm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI3.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI3.pgm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI1.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI1.pgm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI2.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI2.pgm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI3.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI3.pgm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/iptool" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/iptool" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/bin/parameters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/parameters.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/iptool.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/iptool.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Implement RGB to HSI conversion." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,17 +42,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.CommitDialog&quot;,
-    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "structure.view.defaults.are.configured": "true"
   }
-}</component>
+}]]></component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="Homework2" />
@@ -90,7 +76,7 @@
       <updated>1663789631004</updated>
       <workItem from="1663789633296" duration="2872000" />
       <workItem from="1664045343877" duration="42358000" />
-      <workItem from="1664738963075" duration="5083000" />
+      <workItem from="1664738963075" duration="16198000" />
     </task>
     <task id="LOCAL-00001" summary="Create assignment 2 with boiler plate code">
       <created>1663790983020</created>
@@ -162,7 +148,28 @@
       <option name="project" value="LOCAL" />
       <updated>1664743790734</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Complete 'rgbstretch' function.">
+      <created>1664744656735</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1664744656735</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Implement HSI to RGB conversion.">
+      <created>1664751438136</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1664751438136</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Implement RGB to HSI conversion.">
+      <created>1664755573419</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1664755573419</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,7 +205,10 @@
     <MESSAGE value="Complete 'histothres' function." />
     <MESSAGE value="Improve 'after' histogram presentation and refactor code." />
     <MESSAGE value="Comple 'percchanstrech' function." />
-    <option name="LAST_COMMIT_MESSAGE" value="Comple 'percchanstrech' function." />
+    <MESSAGE value="Complete 'rgbstretch' function." />
+    <MESSAGE value="Implement HSI to RGB conversion." />
+    <MESSAGE value="Implement RGB to HSI conversion." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement RGB to HSI conversion." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

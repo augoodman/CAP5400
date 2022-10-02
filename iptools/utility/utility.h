@@ -15,18 +15,32 @@ public:
 
     static int checkValue(int value);
 
-    static bool isInBounds(int x, int y, image &src);
+    static float getHue(int red, int green, int blue);
 
-    static void histostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *c, int *d);
+    static float getSaturation(int red, int green, int blue);
 
-    static void althistostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY,int *c, int *d);
+    static float getIntensity(int red, int green, int blue);
 
-    static void histothres(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *t, int *c, int *d);
+    static int getRed(float hue, float saturation, float intensity);
+
+    static int getGreen(float hue, float saturation, float intensity);
+
+    static int getBlue(float hue, float saturation, float intensity);
+
+    static void
+    histostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *c, int *d);
+
+    static void
+    althistostretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *c, int *d);
+
+    static void
+    histothres(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *t, int *c, int *d);
 
     static void percchastrech(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3],
-                            int sY[3], int *channel, int *c, int *d);
+                              int sY[3], int *channel, int *c, int *d);
 
-    static void rgbstretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY,int *c, int *d);
+    static void
+    rgbstretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *c, int *d);
 
     static void istretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *value);
 
@@ -34,7 +48,8 @@ public:
 
     static void sstretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *value);
 
-    static void fullhsistretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *value);
+    static void
+    fullhsistretch(image &src, image &tgt, int numROI, int *pixelX, int *pixelY, int *sX, int *sY, int *value);
 };
 
 #endif

@@ -62,25 +62,25 @@ int main(int argc, char **argv) {
             if (strncasecmp(pch, "histostretch", MAXLEN) == 0) {
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 p2[ROIcount] = atoi(strtok(NULL, " "));
-                if(!called[0]) called[0] = true;
+                if (!called[0]) called[0] = true;
             } else if (strncasecmp(pch, "althistostretch", MAXLEN) == 0) {
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 p2[ROIcount] = atoi(strtok(NULL, " "));
-                if(!called[1]) called[1] = true;
+                if (!called[1]) called[1] = true;
             } else if (strncasecmp(pch, "histothres", MAXLEN) == 0) {
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 p2[ROIcount] = atoi(strtok(NULL, " "));
                 p3[ROIcount] = atoi(strtok(NULL, " "));
-                if(!called[2]) called[2] = true;
+                if (!called[2]) called[2] = true;
             } else if (strncasecmp(pch, "percchastrech", MAXLEN) == 0) {
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 p2[ROIcount] = atoi(strtok(NULL, " "));
                 p3[ROIcount] = atoi(strtok(NULL, " "));
-                if(!called[3]) called[3] = true;
+                if (!called[3]) called[3] = true;
             } else if (strncasecmp(pch, "rgbstretch", MAXLEN) == 0) {
                 p1[ROIcount] = atof(strtok(NULL, " "));
                 p2[ROIcount] = atof(strtok(NULL, " "));
-                if(!called[4]) called[4] = true;
+                if (!called[4]) called[4] = true;
             } else if (strncasecmp(pch, "istretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 dr[ROIcount] = atof(strtok(NULL, " "));
@@ -129,23 +129,23 @@ int main(int argc, char **argv) {
             ++ROIcount;
         }
 
-        if(called[0]) {
+        if (called[0]) {
             utility::histostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
             called[0] = 0;
         }
-        if(called[1]) {
+        if (called[1]) {
             utility::althistostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
             called[1] = 0;
         }
-        if(called[2]) {
+        if (called[2]) {
             utility::histothres(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2, p3);
             called[2] = 0;
         }
-        if(called[3]) {
+        if (called[3]) {
             utility::percchastrech(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2, p3);
             called[3] = 0;
         }
-        if(called[4]) {
+        if (called[4]) {
             utility::rgbstretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
             called[4] = 0;
         }
