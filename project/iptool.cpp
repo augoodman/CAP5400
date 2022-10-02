@@ -64,22 +64,18 @@ int main(int argc, char **argv) {
                 p2[ROIcount] = atoi(strtok(NULL, " "));
                 if(!called[0]) called[0] = true;
             } else if (strncasecmp(pch, "althistostretch", MAXLEN) == 0) {
-                cout << "ROI function: " << pch << "\n";
                 p1[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Threshold value: " << p1[ROIcount] << "\n\n";
-                utility::althistostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
+                p2[ROIcount] = atoi(strtok(NULL, " "));
+                if(!called[1]) called[1] = true;
             } else if (strncasecmp(pch, "histothres", MAXLEN) == 0) {
                 p1[ROIcount] = atoi(strtok(NULL, " "));
                 p2[ROIcount] = atoi(strtok(NULL, " "));
                 p3[ROIcount] = atoi(strtok(NULL, " "));
                 if(!called[2]) called[2] = true;
-            } else if (strncasecmp(pch, "percchastretch", MAXLEN) == 0) {
-                cout << "ROI function: " << pch << "\n";
+            } else if (strncasecmp(pch, "percchastrech", MAXLEN) == 0) {
                 p1[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Window size: " << p1[ROIcount] << "\n";
                 p2[ROIcount] = atoi(strtok(NULL, " "));
-                cout << "Threshold value: " << p2[ROIcount] << "\n\n";
-                utility::percchastretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
+                if(!called[2]) called[2] = true;
             } else if (strncasecmp(pch, "rgbstretch", MAXLEN) == 0) {
                 cout << "ROI function: " << pch << "\n";
                 dr[ROIcount] = atof(strtok(NULL, " "));
@@ -138,13 +134,21 @@ int main(int argc, char **argv) {
             ++ROIcount;
         }
 
-        if(called[0]){
+        if(called[0]) {
             utility::histostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
             called[0] = 0;
+        }
+        if(called[1]) {
+            utility::althistostretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
+            called[1] = 0;
         }
         if(called[2]) {
             utility::histothres(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2, p3);
             called[2] = 0;
+        }
+        if(called[3]) {
+            utility::percchastrech(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2, p3);
+            called[3] = 0;
         }
         tgt.save(outfile);
     }
