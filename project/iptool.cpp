@@ -33,7 +33,6 @@ int main(int argc, char **argv) {
     char *pch;
     int numROI, ROIcount;
     int pixelX[3], pixelY[3], sX[3], sY[3], p1[3], p2[3], p3[3];
-    float dr[3], dg[3], db[3];
     bool called[9] = {false};
     if ((fp = fopen(argv[1], "r")) == NULL) {
         fprintf(stderr, "Can't open file: %s\n", argv[1]);
@@ -94,15 +93,9 @@ int main(int argc, char **argv) {
                 p2[ROIcount] = atof(strtok(NULL, " "));
                 if (!called[7]) called[7] = true;
             } else if (strncasecmp(pch, "fullhsistretch", MAXLEN) == 0) {
-                cout << "ROI function: " << pch << "\n";
-                dr[ROIcount] = atof(strtok(NULL, " "));
-                cout << "Red channel multiplier: " << dr[ROIcount] << "\n";
-                dg[ROIcount] = atof(strtok(NULL, " "));
-                cout << "Green channel multiplier: " << dg[ROIcount] << "\n";
-                db[ROIcount] = atof(strtok(NULL, " "));
-                cout << "Blue channel multiplier: " << db[ROIcount] << "\n";
-                utility::fullhsistretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1);
-                cout << "\n";
+                p1[ROIcount] = atof(strtok(NULL, " "));
+                p2[ROIcount] = atof(strtok(NULL, " "));
+                if (!called[8]) called[8] = true;
             } else {
                 printf("No function: %s\n", pch);
                 continue;
@@ -142,6 +135,10 @@ int main(int argc, char **argv) {
         if (called[7]) {
             utility::sstretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
             called[7] = 0;
+        }
+        if (called[8]) {
+            utility::fullhsistretch(src, tgt, numROI, pixelX, pixelY, sX, sY, p1, p2);
+            called[8] = 0;
         }
         tgt.save(outfile);
     }

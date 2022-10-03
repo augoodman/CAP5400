@@ -324,7 +324,7 @@ void utility::istretch(image &src, image &tgt, int numROI, int pixelX[3], int pi
                 if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
                     j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
                     intensity = (getIntensity(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
-                                        src.getPixel(i, j, BLUE)) -
+                                              src.getPixel(i, j, BLUE)) -
                                  (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
                     pgm.setPixel(i, j, checkValue(intensity));
                 }
@@ -403,12 +403,12 @@ void utility::hstretch(image &src, image &tgt, int numROI, int pixelX[3], int pi
                 if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
                     j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
                     hue = (getHue(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
-                                        src.getPixel(i, j, BLUE)) -
+                                  src.getPixel(i, j, BLUE)) -
                            (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
                     saturation = getSaturation(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
                                                src.getPixel(i, j, BLUE));
                     intensity = getIntensity(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
-                                              src.getPixel(i, j, BLUE));
+                                             src.getPixel(i, j, BLUE));
                     tgt.setPixel(i, j, RED, checkValue(getRed((float) hue, (float) saturation, (float) intensity)));
                     tgt.setPixel(i, j, GREEN, checkValue(getGreen((float) hue, (float) saturation, (float) intensity)));
                     tgt.setPixel(i, j, BLUE, checkValue(getBlue((float) hue, (float) saturation, (float) intensity)));
@@ -445,8 +445,8 @@ void utility::sstretch(image &src, image &tgt, int numROI, int pixelX[3], int pi
                 if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
                     j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
                     saturation = (getSaturation(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
-                                              src.getPixel(i, j, BLUE)) -
-                                 (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                                                src.getPixel(i, j, BLUE)) -
+                                  (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
                     pgm.setPixel(i, j, checkValue(saturation));
                 }
             }
@@ -466,7 +466,7 @@ void utility::sstretch(image &src, image &tgt, int numROI, int pixelX[3], int pi
                     hue = getHue(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN), src.getPixel(i, j, BLUE));
                     saturation = (getSaturation(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
                                                 src.getPixel(i, j, BLUE)) -
-                                   (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                                  (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
                     intensity = getIntensity(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
                                              src.getPixel(i, j, BLUE));
                     tgt.setPixel(i, j, RED, checkValue(getRed((float) hue, (float) saturation, (float) intensity)));
@@ -481,18 +481,69 @@ void utility::sstretch(image &src, image &tgt, int numROI, int pixelX[3], int pi
 
 /*-----------------------------------------------------------------------**/
 void utility::fullhsistretch(image &src, image &tgt, int numROI, int pixelX[3], int pixelY[3], int sX[3], int sY[3],
-                             int value[3]) {
+                             int c[3], int d[3]) {
     tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
-    int ROIcount = 1;
+    int ROIcount = 0;
+    float hue, saturation, intensity;
+    int grayscale;
+    image pgm;
+    pgm.resize(src.getNumberOfRows(), src.getNumberOfColumns());
     while (numROI > 0) {
+        cout << "Processing ROI #" << ROIcount + 1 << "...\n";
+        cout << "ROI location: (" << pixelX[ROIcount] << "," << pixelY[ROIcount] << ")\n";
+        cout << "ROI size: " << sX[ROIcount] << "x" << sY[ROIcount] << "\n";
+        cout << "ROI function: fullhsistretch" << endl;
+        /*apply grayscale hsi stretching to roi*/
+        if (ROIcount == 0)
+            for (int i = 0; i < src.getNumberOfRows(); i++)
+                for (int j = 0; j < src.getNumberOfColumns(); j++) {
+                    grayscale = (src.getPixel(i, j, RED) + src.getPixel(i, j, GREEN) + src.getPixel(i, j, BLUE)) / 3;
+                    pgm.setPixel(i, j, checkValue(grayscale));
+                }
+        for (int i = 0; i < src.getNumberOfRows(); i++)
+            for (int j = 0; j < src.getNumberOfColumns(); j++) {
+                if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
+                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
+                    hue = (getHue(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
+                                  src.getPixel(i, j, BLUE)) -
+                           (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                    saturation = (getSaturation(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
+                                                src.getPixel(i, j, BLUE)) -
+                                  (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                    intensity = (getIntensity(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
+                                              src.getPixel(i, j, BLUE)) -
+                                 (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                    pgm.setPixel(i, j, checkValue((hue + saturation + intensity) / 3));
+                }
+            }
+        if (numROI == 1) pgm.save("grayscale_fullhsistretch.pgm");
+        /*apply color channel hsi stretching to roi*/
+        if (ROIcount == 0)
+            for (int i = 0; i < src.getNumberOfRows(); i++)
+                for (int j = 0; j < src.getNumberOfColumns(); j++) {
+                    tgt.setPixel(i, j, RED, checkValue(src.getPixel(i, j, RED)));
+                    tgt.setPixel(i, j, GREEN, checkValue(src.getPixel(i, j, GREEN)));
+                    tgt.setPixel(i, j, BLUE, checkValue(src.getPixel(i, j, BLUE)));
+                }
         for (int i = 0; i < src.getNumberOfRows(); i++)
             for (int j = 0; j < src.getNumberOfColumns(); j++)
-                if (i >= pixelY[ROIcount - 1] && i < pixelY[ROIcount - 1] + sY[ROIcount - 1] &&
-                    j >= pixelX[ROIcount - 1] && j < pixelX[ROIcount - 1] + sX[ROIcount - 1])
-                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j) + value[ROIcount - 1]));
-                else if (ROIcount == 1)
-                    tgt.setPixel(i, j, checkValue(src.getPixel(i, j)));
+                if (i >= pixelY[ROIcount] && i < pixelY[ROIcount] + sY[ROIcount] &&
+                    j >= pixelX[ROIcount] && j < pixelX[ROIcount] + sX[ROIcount]) {
+                    hue = (getHue(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
+                                  src.getPixel(i, j, BLUE)) -
+                           (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                    saturation = (getSaturation(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
+                                                src.getPixel(i, j, BLUE)) -
+                                  (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                    intensity = (getIntensity(src.getPixel(i, j, RED), src.getPixel(i, j, GREEN),
+                                              src.getPixel(i, j, BLUE)) -
+                                 (c[ROIcount]) * 1.05) * ((b - a) / ((d[ROIcount] * 0.95) - (c[ROIcount]) * 1.05)) + a;
+                    tgt.setPixel(i, j, RED, checkValue(getRed((float) hue, (float) saturation, (float) intensity)));
+                    tgt.setPixel(i, j, GREEN, checkValue(getGreen((float) hue, (float) saturation, (float) intensity)));
+                    tgt.setPixel(i, j, BLUE, checkValue(getBlue((float) hue, (float) saturation, (float) intensity)));
+                }
         --numROI;
         ++ROIcount;
     }
+    cout << endl;
 }
