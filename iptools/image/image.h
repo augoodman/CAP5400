@@ -46,8 +46,6 @@ public:
    bool save (const char* file);
    bool read (char* file);
    bool isInbounds (const int row, const int col);
-
-
 };
 
 #endif
