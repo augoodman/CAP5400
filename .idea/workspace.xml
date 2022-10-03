@@ -15,7 +15,23 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Implement RGB to HSI conversion." />
+    <list default="true" id="862349bf-20ea-4fa7-b5be-1ec4f82362b9" name="Changes" comment="Implement RGB to HSI conversion.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.h" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iptools/utility/utility.o" beforeDir="false" afterPath="$PROJECT_DIR$/iptools/utility/utility.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libiptools.a" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libiptools.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI1.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI1.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI2.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI2.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI3.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/after_althistostretch_ROI3.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/baboon_althistostretch.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/baboon_althistostretch.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI1.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI1.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI2.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI2.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI3.pgm" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/before_althistostretch_ROI3.pgm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/iptool" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/iptool" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bin/parameters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/bin/parameters.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/iptool.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/iptool.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,7 +92,7 @@
       <updated>1663789631004</updated>
       <workItem from="1663789633296" duration="2872000" />
       <workItem from="1664045343877" duration="42358000" />
-      <workItem from="1664738963075" duration="16198000" />
+      <workItem from="1664738963075" duration="25232000" />
     </task>
     <task id="LOCAL-00001" summary="Create assignment 2 with boiler plate code">
       <created>1663790983020</created>
@@ -169,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664755573419</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Implement RGB to HSI conversion.">
+      <created>1664755646297</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1664755646297</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,16 +232,5 @@
     <MESSAGE value="Implement HSI to RGB conversion." />
     <MESSAGE value="Implement RGB to HSI conversion." />
     <option name="LAST_COMMIT_MESSAGE" value="Implement RGB to HSI conversion." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/project/iptool.cpp</url>
-          <line>144</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

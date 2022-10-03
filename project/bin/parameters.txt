@@ -3,3 +3,4 @@ baboon.pgm baboon_althistostretch.pgm 3 50 50 100 100 althistostretch 50 200 150
 slope.pgm slope_histothres.pgm 3 50 50 100 100 histothres 150 125 200 150 150 100 100 histothres 150 125 175 250 250 100 100 histothres 150 125 175
 baboon.ppm baboon_percchastrech.ppm 3 50 50 100 100 percchastrech 0 50 200 150 150 100 100 percchastrech 1 100 225 250 250 100 100 percchastrech 2 75 225 
 baboon.ppm baboon_rgbstretch.ppm 3 50 50 100 100 rgbstretch 50 200 150 150 100 100 rgbstretch 100 225 250 250 100 100 rgbstretch 75 225 
+baboon.ppm baboon_istretch.ppm 3 50 50 100 100 istretch 50 200 150 150 100 100 istretch 100 225 250 250 100 100 istretch 75 225
